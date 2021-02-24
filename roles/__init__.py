@@ -1,1 +1,1 @@
-from .list import list_roles
+from .roles import do_roles_action
