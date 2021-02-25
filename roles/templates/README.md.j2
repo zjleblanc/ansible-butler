@@ -1,0 +1,101 @@
+{{ role_name }}
+=========
+
+{{ meta.galaxy_info.description | default(role_name + '\'s description') }}
+{% if meta.galaxy_info.issue_tracker_url %}
+
+[Issue Tracker]({{ meta.galaxy_info.issue_tracker_url }})
+{% endif %}
+{% if meta.galaxy_info.min_ansible_version %}
+
+Minimum Ansible Version: {{ meta.galaxy_info.min_ansible_version }}
+{% endif %}
+{% if meta.galaxy_info.min_ansible_container_version %}
+
+Minimum Ansible Container Version: {{ meta.galaxy_info.min_ansible_container_version }}
+{% endif %}
+{% if meta.galaxy_info.galaxy_tags|default([])|length > 0 %}
+
+Galaxy Tags: \[ {{ meta.galaxy_info.galaxy_tags | join(" ") }} \]
+{% endif %}
+{% if meta.galaxy_info.platforms %}
+
+Platforms
+------------
+
+| Platforms | Supported Versions |
+| -------- | ------------------ |
+{% for platform in meta.galaxy_info.platforms %}
+| {{ platform.name }} | {{ platform.versions | join(", ") }} | 
+{% endfor %}
+{% endif %}
+{%  if requirements %}
+
+Requirements
+------------
+
+{% for req in requirements %}
+  - {{ req }}
+{% endfor %}
+
+{% endif %}
+{% if defaults|length > 0 or vars|length > 0 %}
+
+Role Variables
+--------------
+
+| Variable | Default | Value or Expression |
+| -------- | ------- | ------------------- |
+{% for key in defaults %}
+| {{ key }} | :heavy_check_mark: | {{ defaults[key] | string | truncate(length=50,end=' ...') }} |
+{% endfor %}
+{% for key in vars %}
+| {{ key }} | :x: | {{ vars[key] | string | truncate(length=50,end=' ...') }} |
+{% endfor %}
+{% endif %}
+{% if handlers|length > 0 %}
+
+Handlers
+--------------
+
+{% for handler in handlers %}
+  - {{ handler.name }}
+{% endfor %}
+{% endif %}
+{%  if meta.dependencies %}
+
+Dependencies
+------------
+
+{% for dep in meta.dependencies %}
+  - {{ dep }}
+{% endfor %}
+{% endif %}
+
+Example Playbook
+----------------
+
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+
+  ```yaml
+    - hosts: servers
+      roles:
+          - { role: username.rolename, x: 42 }
+  ```
+{% if meta.galaxy_info.license %}
+
+License
+-------
+
+{{ meta.galaxy_info.license }}
+{% endif %}
+{% if meta.galaxy_info.author %}
+
+Author Information
+-------
+**{{ meta.galaxy_info.author }}**
+{% if meta.galaxy_info.company %}
+
+{{ meta.galaxy_info.company }}
+{% endif %}
+{% endif %}
