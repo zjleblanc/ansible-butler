@@ -24,7 +24,7 @@ Arguments:
   name    name of role (accepts glob patterns)
 
 Options:
-  -h --help                               Show this screen
+  -h --help           Show this screen
   --roles-path=PATH   Path to roles directory [default: ./roles]
 ```
 
