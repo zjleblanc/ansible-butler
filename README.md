@@ -16,9 +16,9 @@ Usage
 --------------
 
 ```
-  ansible-butler.py role list [--roles-path=PATH] [<name>]
-  ansible-butler.py role clean [--roles-path=PATH] [<name>]
-  ansible-butler.py role mk-readme [--roles-path=PATH] [<name>]
+ansible-butler.py role list [--roles-path=PATH] [<name>]
+ansible-butler.py role clean [--roles-path=PATH] [<name>]
+ansible-butler.py role mk-readme [--roles-path=PATH] [<name>]
 
 Arguments:
   name    name of role (accepts glob patterns)
