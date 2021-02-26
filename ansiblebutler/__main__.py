@@ -12,12 +12,12 @@ Options:
   --roles-path=PATH   Path to roles directory [default: ./roles]
 """
 from docopt import docopt
-from ansiblebutler.roles import do_roles_action
+from ansiblebutler import roles
 
 def main():
   args = docopt(__doc__)
   if args.get('role'):
-    do_roles_action(args)
+    roles.do_roles_action(args)
   else:
     print(args)
 
