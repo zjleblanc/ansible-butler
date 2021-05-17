@@ -38,6 +38,12 @@ Examples
   - `ansible-butler role mk-readme my-role-1`
   - `ansible-butler role mk-readme my-role-*`
 
+Troubleshooting
+----------------
+
+- `ansible-butler: command not found`
+  - check the $PATH environment variable and ensure that `~/.local/bin` is included
+
 License
 -------
 
