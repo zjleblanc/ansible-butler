@@ -1,0 +1,18 @@
+---
+folders:
+  - name: inventories
+    folders:
+      - name: example-inventory
+        files:
+          - hosts
+        folders:
+          - name: group_vars
+          - name: host_vars
+  - name: library
+  - name: module_utils
+  - name: filter_plugins
+  - name: roles
+files:
+  - playbook.yml
+  - ansible.cfg
+  
