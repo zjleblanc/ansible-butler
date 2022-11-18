@@ -1,17 +1,19 @@
 """
 Usage:
-  ansible-butler directory init [(-d=DIR|--directory=DIR)]
+  ansible-butler directory init [<dir>]
+  ansible-butler directory clean [<dir>] [--skip-roles]
   ansible-butler role list [--roles-path=PATH] [<name>]
   ansible-butler role clean [--roles-path=PATH] [<name>]
   ansible-butler role mk-readme [--roles-path=PATH] [<name>]
 
 Arguments:
   name    name of role (accepts glob patterns)
+  dir     path to directory [default: ./]
 
 Options:
   -h --help                               Show this screen
-  -d --directory=DIR   Location to initialize ansible directory structure [default: ./]
   --roles-path=PATH   Path to roles directory [default: ./roles]
+  --skip-roles        Flag to skip cleaning roles
 """
 from docopt import docopt
 from ansiblebutler import roles

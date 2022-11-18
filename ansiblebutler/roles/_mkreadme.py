@@ -1,5 +1,5 @@
 import os
-from ._common import parse_yml, get_template
+from ..common import parse_yml, get_template
 
 def mk_readme(role: str):
   role_name = os.path.basename(role)

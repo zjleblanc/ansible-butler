@@ -1,6 +1,6 @@
 import os
 import glob
-from ._common import parse_yml
+from ..common import parse_yml
 
 def clean_role(role: str):
   for yml in glob.glob(role + "/**/*.yml"):
