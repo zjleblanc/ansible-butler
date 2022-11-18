@@ -1,0 +1,11 @@
+---
+- hosts: all
+  gather_facts: no
+
+  vars:
+    created_date: "{{ date }}"
+
+  tasks:
+    - name: Print created date
+      debug:
+        msg: "This playbook was created on {% raw %}{{ created_date }}{% endraw %}"

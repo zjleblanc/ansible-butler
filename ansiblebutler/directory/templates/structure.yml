@@ -13,6 +13,6 @@ folders:
   - name: filter_plugins
   - name: roles
 files:
-  - playbook.yml
+  - playbook.yml.j2
   - ansible.cfg
   
