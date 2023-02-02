@@ -1,11 +1,15 @@
 import os
 from ..common import parse_yml, get_template
 
+TEMPLATE_DIR = os.path.dirname(os.path.abspath(__file__)) + '/templates'
+
 def mk_readme(role: str):
   role_name = os.path.basename(role)
   template_vars = {
     "role_name": role_name,
-    "meta": {},
+    "meta": {
+      "galaxy_info": {}
+    },
     "defaults": {}
   }
   template_vars.update(get_yaml_dict(role + '/meta/main.yml', 'meta'))
@@ -13,13 +17,14 @@ def mk_readme(role: str):
   template_vars.update(get_yaml_dict(role + '/vars/main.yml', 'vars'))
   template_vars.update(get_yaml_dict(role + '/handlers/main.yml', 'handlers'))
   
-  template = get_template('README.md.j2')
+  template = get_template('README.md.j2', TEMPLATE_DIR)
   template.stream(template_vars).dump(role + '/README-butler.md')
 
 def get_yaml_dict(yml, key=None) -> dict:
-  parsed = {}
   if os.path.isfile(yml):
     parsed = parse_yml(yml)
+  else:
+    return {}
 
   if key:
     return { key: parsed }

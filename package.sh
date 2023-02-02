@@ -5,4 +5,4 @@ cp -a dist/. dist.bkp/
 rm -R dist/*
 
 python3 -m build
-python3 -m twine upload dist/* --repository pypi --config ~/.pypirc
+python3 -m twine upload dist/* --repository ansiblebutler --config ~/.pypirc

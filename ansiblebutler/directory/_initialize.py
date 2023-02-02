@@ -1,6 +1,6 @@
 import os
 import yaml
-from jinja2 import Environment, Template, FileSystemLoader
+from ..common import get_template 
 from datetime import datetime
 
 DEFAULT_DIR = "./"
@@ -12,8 +12,7 @@ with open(TEMPLATE_DIR + '/structure.yml', 'r') as stream:
 def create_file(parent, file: str):
     full_path = parent + '/' + file
     if file.endswith('.j2'):
-        environment = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
-        template = environment.get_template(file)
+        template = get_template(file, TEMPLATE_DIR)
         content = template.render({'date': datetime.now()})
         with open(full_path[:-3], 'w') as file:
             file.write(content)
