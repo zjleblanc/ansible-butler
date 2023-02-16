@@ -1,0 +1,22 @@
+---
+role: {}
+directory:
+  init:
+    folders:
+      - name: inventories
+        folders:
+          - name: example-inventory
+            files:
+              - hosts
+            folders:
+              - name: group_vars
+              - name: host_vars
+      - name: library
+      - name: module_utils
+      - name: filter_plugins
+      ## Additional folder here for custom test plugins
+      - name: test_plugins
+      - name: roles
+    files:
+      - playbook.yml.j2
+      - ansible.cfg
