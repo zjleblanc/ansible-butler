@@ -1,13 +1,9 @@
 import os
-import yaml
 from ..common import get_template 
 from datetime import datetime
 
 DEFAULT_DIR = "./"
 TEMPLATE_DIR = os.path.dirname(os.path.abspath(__file__)) + '/templates'
-
-with open(TEMPLATE_DIR + '/structure.yml', 'r') as stream:
-    STRUCTURE = yaml.safe_load(stream)
 
 def create_file(parent, file: str):
     full_path = parent + '/' + file
@@ -29,9 +25,9 @@ def create_folder(parent, folder):
         os.makedirs(path, exist_ok=True)
         create_folder(path, folder)
 
-def init_dir(dir: str):
+def init_dir(dir: str, structure: dict):
     if dir != DEFAULT_DIR:
         os.makedirs(dir, exist_ok=True)
-    create_folder(dir, STRUCTURE)
+    create_folder(dir, structure)
 
   

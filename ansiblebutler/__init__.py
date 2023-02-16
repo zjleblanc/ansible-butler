@@ -1,6 +1,6 @@
 """
 Usage:
-  ansible-butler directory init [<dir>]
+  ansible-butler directory init [<dir>] [--config=PATH]
   ansible-butler directory clean [<dir>] [--skip-roles]
   ansible-butler role list [--roles-path=PATH] [<name>]
   ansible-butler role clean [--roles-path=PATH] [<name>]
@@ -11,20 +11,24 @@ Arguments:
   dir     path to directory [default: ./]
 
 Options:
-  -h --help                               Show this screen
+  -h --help           Show this screen
+  --config=PATH       Path to config file
   --roles-path=PATH   Path to roles directory [default: ./roles]
   --skip-roles        Flag to skip cleaning roles
 """
 from docopt import docopt
 from ansiblebutler import roles
 from ansiblebutler import directory
+from ansiblebutler.common import process_config
 
 def main():
   args = docopt(__doc__)
+  config = process_config(args.get('--config'))
+
   if args.get('role'):
-    roles.do_roles_action(args)
+    roles.do_roles_action(args, config.get('role'))
   elif args.get('directory'):
-    directory.do_dir_action(args)
+    directory.do_dir_action(args, config.get('directory'))
   else:
     print(args)
 
