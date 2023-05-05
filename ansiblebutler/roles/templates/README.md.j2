@@ -59,10 +59,10 @@ Role Variables
 | Variable | Type | Value or Expression | Description |
 | -------- | ------- | ------------------- | --------- |
 {% for key in defaults %}
-| {{ key }} | default | {{ defaults[key] | string | truncate(length=50,end=' ...') }} | {{ default_comments[key] if key in default_comments else '' }} |
+| {{ key }} | default | {{ defaults[key] | string | truncate(length=50,end=' ...') }} | {{ defaults_comments[key] if key in defaults_comments else '' }} |
 {% endfor %}
 {% for key in vars %}
-| {{ key }} | var | {{ vars[key] | string | truncate(length=50,end=' ...') }} | |
+| {{ key }} | var | {{ vars[key] | string | truncate(length=50,end=' ...') }} | {{ vars_comments[key] if key in vars_comments else '' }} |
 {% endfor %}
 {% endif %}
 {% if handlers|length > 0 %}
