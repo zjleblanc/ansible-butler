@@ -42,6 +42,33 @@ def parse_yml(yml: str):
       print(ex)
   return yml_dict
 
+def parse_comment_lines(yml):
+  comments = []
+  with open(yml, 'r') as stream:
+    for line in stream.readlines():
+      if line.startswith("#") and len(line.split("#")) > 1:
+        comment = {}
+        parts = line.strip("#").split("#")
+        comment['name'] = parts[0].strip()
+        if ":" in comment['name']:
+          comment['value'] = comment['name'].split(":")[1].strip()
+          comment['name'] = comment['name'].split(":")[0].strip()
+        if len(parts) > 1:
+          comment['desc'] = parts[-1].strip()
+        comments.append(comment)
+  return comments
+
+def parse_comment_line_endings(yml):
+  var_comments = {}
+  with open(yml, 'r') as stream:
+    for line in stream.readlines():
+      if not line.strip().startswith("#") and "#" in line:
+        parts = line.strip().split("#")
+        var_name = parts[0].split(":")[0].lstrip()
+        var_comment = parts[-1].lstrip()
+        var_comments[var_name] = var_comment
+  return var_comments
+
 def get_template(name: str, templates_dir=TEMPLATE_DIR) -> Template:
   file_loader = FileSystemLoader(templates_dir)
   env = Environment(loader=file_loader, trim_blocks=True, lstrip_blocks=True)

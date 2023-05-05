@@ -39,18 +39,30 @@ Requirements
 {% endfor %}
 
 {% endif %}
+{% if required_vars|length > 0 %}
+
+Required Variables
+------------------
+
+| Name | Example | Description |
+| -------- | ------- | ------------------- |
+{% for req in required_vars %}
+| {{ req.name }} | {{ req.value | default('') }} | {{ req.desc | default('') }} |
+{% endfor %}
+
+{% endif %}
 {% if defaults|length > 0 or vars|length > 0 %}
 
 Role Variables
 --------------
 
-| Variable | Default | Value or Expression |
-| -------- | ------- | ------------------- |
+| Variable | Type | Value or Expression | Description |
+| -------- | ------- | ------------------- | --------- |
 {% for key in defaults %}
-| {{ key }} | :heavy_check_mark: | {{ defaults[key] | string | truncate(length=50,end=' ...') }} |
+| {{ key }} | default | {{ defaults[key] | string | truncate(length=50,end=' ...') }} | {{ default_comments[key] if key in default_comments else '' }} |
 {% endfor %}
 {% for key in vars %}
-| {{ key }} | :x: | {{ vars[key] | string | truncate(length=50,end=' ...') }} |
+| {{ key }} | var | {{ vars[key] | string | truncate(length=50,end=' ...') }} | |
 {% endfor %}
 {% endif %}
 {% if handlers|length > 0 %}
@@ -79,8 +91,16 @@ Including an example of how to use your role (for instance, with variables passe
 
   ```yaml
     - hosts: servers
-      roles:
-          - { role: username.rolename, x: 42 }
+      tasks:
+        - name: Execute {{ role_name }} role
+          ansible.builtin.include_role:
+            name: {{ role_name }}
+          {% if required_vars|length > 0 %}
+          vars:
+          {% for req in required_vars %}
+            {{ req.name }}: {{ req.value | default('...') }}
+          {% endfor %}
+          {% endif %}
   ```
 {% if meta.galaxy_info.license %}
 
