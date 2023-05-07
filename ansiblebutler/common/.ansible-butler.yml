@@ -1,5 +1,15 @@
 ---
-role: {}
+execution_environment:
+  init:
+    version: 2
+    ansible_config: ansible.cfg
+    ee_base_image: quay.io/ansible/ansible-runner:latest
+    ee_builder_image: quay.io/ansible/ansible-builder:latest
+    prepend_build_steps:
+      - RUN pip3 install --upgrade pip setuptools
+    append_build_steps:
+      - RUN echo 'Build completed (ansible-butler)'
+
 directory:
   init:
     folders:
@@ -18,3 +28,5 @@ directory:
     files:
       - playbook.yml.j2
       - ansible.cfg
+
+role: {}

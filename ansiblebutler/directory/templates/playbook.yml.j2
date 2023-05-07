@@ -7,5 +7,5 @@
 
   tasks:
     - name: Print created date
-      debug:
-        msg: "This playbook was created on {% raw %}{{ created_date }}{% endraw %}"
+      ansible.builtin.debug:
+        msg: "This playbook was created by ansible-butler on {% raw %}{{ created_date }}{% endraw %}"
