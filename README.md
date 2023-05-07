@@ -10,6 +10,7 @@ Functions
 | ------ | ------ | ----------- |
 | directory | init | initialize an ansible directory |
 | directory | init | cleanup an ansible directory |
+| ee | init | initialize an execution environment directory for ansible-builder |
 | role | list | list roles |
 | role | clean | clean role directory structure (remove empty yml files & dirs) |
 | role | mk-readme | auto generate readme based on role meta and basic yml info |
@@ -21,6 +22,7 @@ Usage
 Usage:
   ansible-butler directory init [<dir>] [--config=PATH]
   ansible-butler directory clean [<dir>] [--skip-roles]
+  ansible-butler ee init [<dir>] [--config=PATH]
   ansible-butler role list [--roles-path=PATH] [<name>]
   ansible-butler role clean [--roles-path=PATH] [<name>]
   ansible-butler role mk-readme [--roles-path=PATH] [<name>]
@@ -45,6 +47,9 @@ Examples
 - Clean an Ansible Directory
   - `ansible-butler directory clean ./sandbox`
   - `ansible-butler directory clean ./sandbox --skip-roles`
+- Initialize Execution Environment Directory
+  - `ansible-butler ee init ./ee-windows`
+  - `ansible-butler ee init ./ee-windows --config=~/configs/ansible-butler.yml`
 - Clean Roles 
   - `ansible-butler role clean my-role-1`
   - `ansible-butler role clean my-role-*`
@@ -66,8 +71,16 @@ You can also specify a specific path at runtime via the `--config` option.
 
 ```yaml
 # Configuration Schema
-
-role: {}
+execution_environment:
+  init:
+    version: 2
+    ansible_config: ansible.cfg
+    ee_base_image: quay.io/ansible/ansible-runner:latest
+    ee_builder_image: quay.io/ansible/ansible-builder:latest
+    prepend_build_steps:
+      - ...
+    append_build_steps:
+      - ...
 directory:
   init:
     folders:
@@ -78,11 +91,12 @@ directory:
           - README.md
     files:
       - playbook.yml
+role: {}
 ```
 
-[🔗](./ansiblebutler/common/.ansible-butler.yml) Default configuration file
+[🔗 Default configuration file](./ansiblebutler/common/.ansible-butler.yml)
 <br>
-[🔗](./docs/config/.ansible-butler.example.yml) Example adding test plugins directory
+[🔗 Example adding test plugins directory](./docs/config/.ansible-butler.test-plugins.yml)
 
 Troubleshooting
 ----------------
