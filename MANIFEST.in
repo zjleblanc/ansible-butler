@@ -1,2 +1,2 @@
 include *.j2 *.yml
-global-exclude *.py[cod]
+global-exclude *.py[cod] CODEOWNERS *.md
