@@ -2,6 +2,7 @@ import os
 import yaml
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, Template
+from mergedeep import merge, Strategy
 
 TEMPLATE_DIR = os.path.dirname(os.path.abspath(__file__)) + '/templates'
 
@@ -26,10 +27,10 @@ def process_config(custom):
 
   for loc in CONFIG_LOCATIONS:
     path = loc + '/' + CONFIG_FILE_NAME
-    config.update(load_yml(path))
+    merge(config, load_yml(path), strategy=Strategy.TYPESAFE_REPLACE)
 
   if custom:
-    config.update(load_yml(custom))
+    merge(config, load_yml(custom), strategy=Strategy.TYPESAFE_REPLACE)
 
   return config
 
