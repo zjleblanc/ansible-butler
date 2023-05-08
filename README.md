@@ -1,6 +1,8 @@
 ansible-butler
 =========
 
+[![PyPI version](https://img.shields.io/pypi/v/ansible-butler.svg)](https://pypi.org/project/ansible-butler)
+<br>
 Butler CLI for Ansible projects
 
 Functions
