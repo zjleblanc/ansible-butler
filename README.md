@@ -1,5 +1,5 @@
 ansible-butler 
-<img align="right" src="https://img.shields.io/pypi/v/ansible-butler.svg" href="https://pypi.org/project/ansible-butler"/>
+<a href="https://pypi.org/project/ansible-butler"><img align="right" src="https://img.shields.io/pypi/v/ansible-butler.svg"/></a>
 =========
 
 Butler CLI for Ansible projects
