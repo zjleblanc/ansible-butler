@@ -20,9 +20,9 @@ class TestClass:
         update.update_playbook(self.examples_dir + f'/test-{playbook}.yml', {}, False)
         assert filecmp.cmp(actual_path, expected_path, shallow=False)
 
-    @pytest.mark.parametrize('playbook', ['windows','azure','aws'])
+    @pytest.mark.parametrize('playbook', ['custom-config'])
     def test_playbook_update_config(self, config, playbook):
         actual_path = self.examples_dir + f'/test-{playbook}.butler.yml'
         expected_path = self.examples_dir + f'/test-{playbook}.butler.expected.yml'
-        update.update_playbook(self.examples_dir + f'/test-{playbook}.yml', {}, False)
+        update.update_playbook(self.examples_dir + f'/test-{playbook}.yml', config, False)
         assert filecmp.cmp(actual_path, expected_path, shallow=False)
