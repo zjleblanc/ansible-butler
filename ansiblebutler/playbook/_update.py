@@ -39,7 +39,7 @@ def update_playbook(ansible_path: str, config: dict, in_place: bool):
     else:
         raise Exception(f"Unable to parse ansible file: {ansible_path}")
     
-    module_map = PLUGIN_MAP['plugin_routing']['modules']
+    module_map = PLUGIN_MAP['modules']
     module_map.update(config.get('modules', {}))
     updated = update_module_names(Path(ansible_path).read_text(), module_names, module_map)
     
