@@ -1,0 +1,4 @@
+---
+modules:
+  smart_device:
+    redirect: zjleblanc.kasa.smart_device

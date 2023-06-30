@@ -1,0 +1,33 @@
+---
+execution_environment:
+  init:
+    ee_base_image: registry.redhat.io/ansible-automation-platform-22/ee-supported-rhel8:latest
+    ee_builder_image: registry.redhat.io/ansible-automation-platform-22/ee-supported-rhel8:latest
+
+directory:
+  init:
+    folders:
+      - name: inventories
+        folders:
+          - name: example-inventory
+            files:
+              - hosts
+            folders:
+              - name: group_vars
+              - name: host_vars
+      - name: library
+      - name: module_utils
+      - name: filter_plugins
+      - name: test_plugins
+      - name: roles
+    files:
+      - playbook.yml.j2
+      - ansible.cfg
+
+role: {}
+
+playbook:
+  update:
+    modules:
+      smart_device:
+        redirect: zjleblanc.kasa.smart_device

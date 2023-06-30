@@ -22,7 +22,7 @@ Options:
   --skip-roles        Flag to skip cleaning roles
 """
 from docopt import docopt
-from ansiblebutler import roles
+from ansiblebutler import role
 from ansiblebutler import directory
 from ansiblebutler import execution_environment
 from ansiblebutler import playbook
@@ -33,7 +33,7 @@ def main():
   config = process_config(args.get('--config'))
 
   if args.get('role'):
-    roles.do_roles_action(args, config.get('role'))
+    role.do_role_action(args, config.get('role'))
   elif args.get('directory'):
     directory.do_dir_action(args, config.get('directory'))
   elif args.get('ee'):

@@ -21,7 +21,8 @@ def get_module_names(tasks: list) -> list:
 
 def update_module_names(content, module_names, module_map):
     for name in module_names:
-        content = content.replace(name, module_map[name]['redirect'])
+        # preceding spaces / ending colon ensure matching text is a full yaml key
+        content = content.replace(f'  {name}:', f'  {module_map[name]["redirect"]}:')
     return content
 
 def update_playbook(ansible_path: str, config: dict, in_place: bool):

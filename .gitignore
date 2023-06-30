@@ -1,8 +1,8 @@
-/*ansible-butler.yml
-
+.vscode/
 .DS_Store
 roles/
 playbooks/
+/*ansible-butler.yml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
