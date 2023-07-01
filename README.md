@@ -15,6 +15,7 @@ Functions
 | role | list | list roles |
 | role | clean | clean role directory structure (remove empty yml files & dirs) |
 | role | mk-readme | auto generate readme based on role meta and basic yml info |
+| playbook | update | map legacy module names to FCQNs |
 
 Usage
 --------------
@@ -24,18 +25,22 @@ Usage:
   ansible-butler directory init [<dir>] [--config=PATH]
   ansible-butler directory clean [<dir>] [--skip-roles]
   ansible-butler ee init [<dir>] [--config=PATH]
-  ansible-butler role list [--roles-path=PATH] [<name>]
-  ansible-butler role clean [--roles-path=PATH] [<name>]
-  ansible-butler role mk-readme [--roles-path=PATH] [<name>]
+  ansible-butler role list [--roles-path=PATH] [<name> --recursive]
+  ansible-butler role clean [--roles-path=PATH] [<name> --recursive]
+  ansible-butler role mk-readme [--roles-path=PATH] [<name> --recursive]
+  ansible-butler playbook update [--context=CONTEXT] [--config=PATH] [<name>] [--recursive] [--force]
 
 Arguments:
-  name    name of role (accepts glob patterns)
+  name    name of target (accepts glob patterns)
   dir     path to directory [default: ./]
 
 Options:
   -h --help           Show this screen
+  -r --recursive      Apply glob recursively [default: False]
+  -f --force          Make file changes in place
   --config=PATH       Path to config file
   --roles-path=PATH   Path to roles directory [default: ./roles]
+  --context=CONTEXT   Path to context directory [default: ./]
   --skip-roles        Flag to skip cleaning roles
 ```
 
@@ -57,6 +62,10 @@ Examples
 - Generate README
   - `ansible-butler role mk-readme my-role-1`
   - `ansible-butler role mk-readme my-role-*`
+- Update Playbooks
+  - `ansible-butler playbook update --context=./playbooks -r`
+  - `ansible-butler playbook update legacy-*.yml`
+  - `ansible-butler playbook update -f`
 
 Configuration
 -------------
@@ -82,6 +91,7 @@ execution_environment:
       - ...
     append_build_steps:
       - ...
+
 directory:
   init:
     folders:
@@ -92,12 +102,21 @@ directory:
           - README.md
     files:
       - playbook.yml
-role: {}
+
+playbook:
+  update:
+    modules:
+      smart_device:
+        redirect: zjleblanc.kasa.smart_device
+      custom_module:
+        redirect: company.it.custom_module
 ```
 
 [🔗 Default configuration file](./ansiblebutler/common/.ansible-butler.yml)
 <br>
 [🔗 Example adding test plugins directory](./docs/config/.ansible-butler.test-plugins.yml)
+<br>
+[🔗 Example adding module redirects](./docs/config/.ansible-butler.module-redirects.yml)
 
 Troubleshooting
 ----------------

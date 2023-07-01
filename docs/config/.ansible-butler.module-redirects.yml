@@ -1,0 +1,31 @@
+---
+directory:
+  init:
+    folders:
+      - name: inventories
+        folders:
+          - name: example-inventory
+            files:
+              - hosts
+            folders:
+              - name: group_vars
+              - name: host_vars
+      - name: library
+      - name: module_utils
+      - name: filter_plugins
+      ## Additional folder here for custom test plugins
+      - name: test_plugins
+      - name: roles
+    files:
+      - playbook.yml.j2
+      - ansible.cfg
+
+playbook:
+  updates:
+    smart_device:
+      redirect: zjleblanc.kasa.smart_device
+    # Keep in mind the possible implications of this override:
+    # awx.awx.project -> ansible.controller.project
+    # changes like this can be an improvement when backwards compatibility is guaranteed
+    project:
+      redirect: ansible.controller.project
