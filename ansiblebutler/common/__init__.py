@@ -5,6 +5,7 @@ from jinja2 import Environment, FileSystemLoader, Template
 from mergedeep import merge, Strategy
 
 TEMPLATE_DIR = os.path.dirname(os.path.abspath(__file__)) + '/templates'
+PLUGIN_MAP_PATH = os.path.dirname(os.path.abspath(__file__)) + '/plugin_map.yml'
 
 CONFIG_FILE_NAME = '.ansible-butler.yml'
 CONFIG_LOCATIONS = [
@@ -12,14 +13,7 @@ CONFIG_LOCATIONS = [
   '/etc/ansible-butler', ## least precedence
   str(Path.home()),
   os.getcwd() ## highest precedence
-  
 ]
-
-def load_yml(path):
-  if os.path.isfile(path):
-    with open(path, 'r') as yml:
-      return yaml.safe_load(yml)
-  return {}
 
 def process_config(custom):
   defaults = os.path.join(os.path.dirname(__file__), CONFIG_FILE_NAME)
@@ -34,9 +28,16 @@ def process_config(custom):
 
   return config
 
-def parse_yml(yml: str):
-  yml_dict = None
-  with open(yml, 'r') as stream:
+def dump_yml(data, path: str):
+  with open(path, 'w') as yml:
+    return yaml.safe_dump(data, yml)
+
+def load_yml(path: str):
+  yaml_dict = {}
+  if not os.path.isfile(path):
+    return yaml_dict
+
+  with open(path, 'r') as stream:
     try:
       yml_dict = yaml.safe_load(stream)
     except yaml.YAMLError as ex:

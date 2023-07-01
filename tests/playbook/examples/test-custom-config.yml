@@ -1,0 +1,27 @@
+- name: get network adapter information for each host
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: make absolutely sure the connection is active
+      wait_for_connection:
+
+    - name: get network connection name for private adapter
+      win_shell: |
+        foreach ($instance in (Get-CimInstance -ClassName Win32_NetworkAdapter -Filter "Netenabled='True'")) {
+            $instance_config = Get-CimInstance -ClassName WIn32_NetworkAdapterConfiguration -Filter "Index = '$($instance.Index)'"
+            if ($instance_config.IPAddress -contains "{{ansible_host}}") {
+                $instance.NetConnectionID
+            }
+        }
+      changed_when: false
+      register: network_connection_name
+
+    - name: Create a resource group
+      azure_rm_resourcegroup:
+        name: "{{ resource_group }}"
+        location: "{{ location }}"
+
+    - name: Info about ec2 using ec2_instance_facts
+      ec2_instance_facts:
+        region: us-east-1

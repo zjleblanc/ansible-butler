@@ -1,6 +1,6 @@
 import os
 import glob
-from ..common import parse_yml
+from ..common import load_yml
 
 BASIC_TARGETS=[
     "filter_plugins",
@@ -22,7 +22,7 @@ def delete_empty_dirs(context: str):
 
 def clean_role(role: str):
   for yml in glob.glob(role + "/**/*.yml"):
-    if not parse_yml(yml):
+    if not load_yml(yml):
       os.remove(yml)
 
   for sub_dir in os.scandir(role):

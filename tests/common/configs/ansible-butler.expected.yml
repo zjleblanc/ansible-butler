@@ -1,0 +1,38 @@
+execution_environment:
+  init:
+    version: 2
+    ansible_config: ansible.cfg
+    ee_base_image: registry.redhat.io/ansible-automation-platform-22/ee-supported-rhel8:latest
+    ee_builder_image: registry.redhat.io/ansible-automation-platform-22/ee-supported-rhel8:latest
+    prepend_build_steps:
+      - RUN pip3 install --upgrade pip setuptools
+    append_build_steps:
+      - RUN echo 'Build completed (ansible-butler)'
+
+directory:
+  init:
+    files:
+    - playbook.yml.j2
+    - ansible.cfg
+    folders:
+    - folders:
+      - files:
+        - hosts
+        folders:
+        - name: group_vars
+        - name: host_vars
+        name: example-inventory
+      name: inventories
+    - name: library
+    - name: module_utils
+    - name: filter_plugins
+    - name: test_plugins
+    - name: roles
+
+playbook:
+  update:
+    modules:
+      smart_device:
+        redirect: zjleblanc.kasa.smart_device
+        
+role: {}

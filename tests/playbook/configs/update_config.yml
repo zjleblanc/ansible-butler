@@ -1,0 +1,8 @@
+---
+modules:
+  win_shell:
+    redirect: butler.windows.win_shell
+  azure_rm_resourcegroup:
+    redirect: butler.azure.azure_rm_resourcegroup
+  ec2_instance_facts:
+    redirect: butler.aws.ec2_instance_facts

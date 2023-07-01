@@ -1,5 +1,5 @@
 import os
-from ..common import parse_yml, parse_comment_lines, parse_comment_line_endings, get_template
+from ..common import load_yml, parse_comment_lines, parse_comment_line_endings, get_template
 
 TEMPLATE_DIR = os.path.dirname(os.path.abspath(__file__)) + '/templates'
 
@@ -22,7 +22,7 @@ def mk_readme(role: str):
 
 def get_yaml_dict(yml, key) -> dict:
   if os.path.isfile(yml):
-    parsed = parse_yml(yml) or {}
+    parsed = load_yml(yml) or {}
     comments = parse_comment_line_endings(yml)
   else:
     parsed = {}

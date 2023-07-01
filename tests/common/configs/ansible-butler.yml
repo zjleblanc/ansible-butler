@@ -1,14 +1,8 @@
 ---
 execution_environment:
   init:
-    version: 2
-    ansible_config: ansible.cfg
-    ee_base_image: quay.io/ansible/ansible-runner:latest
-    ee_builder_image: quay.io/ansible/ansible-builder:latest
-    prepend_build_steps:
-      - RUN pip3 install --upgrade pip setuptools
-    append_build_steps:
-      - RUN echo 'Build completed (ansible-butler)'
+    ee_base_image: registry.redhat.io/ansible-automation-platform-22/ee-supported-rhel8:latest
+    ee_builder_image: registry.redhat.io/ansible-automation-platform-22/ee-supported-rhel8:latest
 
 directory:
   init:
@@ -24,6 +18,7 @@ directory:
       - name: library
       - name: module_utils
       - name: filter_plugins
+      - name: test_plugins
       - name: roles
     files:
       - playbook.yml.j2
@@ -31,4 +26,8 @@ directory:
 
 role: {}
 
-playbook: {}
+playbook:
+  update:
+    modules:
+      smart_device:
+        redirect: zjleblanc.kasa.smart_device
