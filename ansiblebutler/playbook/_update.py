@@ -25,7 +25,7 @@ def update_module_names(content, module_names, module_map):
         content = content.replace(f'  {name}:', f'  {module_map[name]["redirect"]}:')
     return content
 
-def update_playbook(ansible_path: str, config: dict, in_place: bool):
+def update_playbook(ansible_path: str, **kwargs):
     parsed = load_yml(ansible_path)
     ansible_type = get_ansible_type(parsed)
     module_names = set()
@@ -40,10 +40,10 @@ def update_playbook(ansible_path: str, config: dict, in_place: bool):
         raise Exception(f"Unable to parse ansible file: {ansible_path}")
     
     module_map = PLUGIN_MAP['modules']
-    module_map.update(config.get('modules', {}))
+    module_map.update(kwargs['config'].get('modules', {}))
     updated = update_module_names(Path(ansible_path).read_text(), module_names, module_map)
     
-    if in_place:
+    if kwargs['in_place']:
         Path(ansible_path).write_text(updated)
     else:
         butler_path = ansible_path.replace(".yml", ".butler.yml")

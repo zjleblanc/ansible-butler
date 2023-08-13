@@ -75,3 +75,8 @@ def get_template(name: str, templates_dir=TEMPLATE_DIR) -> Template:
   file_loader = FileSystemLoader(templates_dir)
   env = Environment(loader=file_loader, trim_blocks=True, lstrip_blocks=True)
   return env.get_template(name)
+
+def default_json_serializer(obj):
+    if isinstance(obj, set):
+        return list(obj)
+    raise TypeError

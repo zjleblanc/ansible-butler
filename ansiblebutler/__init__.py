@@ -7,6 +7,7 @@ Usage:
   ansible-butler role clean [--roles-path=PATH] [<name> --recursive]
   ansible-butler role mk-readme [--roles-path=PATH] [<name> --recursive]
   ansible-butler playbook update [--context=CONTEXT] [--config=PATH] [<name>] [--recursive] [--force]
+  ansible-butler playbook [list-collections|lc] [--context=CONTEXT] [--config=PATH] [<name>] [--recursive] [--force]
 
 Arguments:
   name    name of target (accepts glob patterns)

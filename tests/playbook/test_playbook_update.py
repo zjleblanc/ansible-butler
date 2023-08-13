@@ -17,12 +17,12 @@ class TestClass:
     def test_playbook_update(self, playbook):
         actual_path = self.examples_dir + f'/test-{playbook}.butler.yml'
         expected_path = self.examples_dir + f'/test-{playbook}.butler.expected.yml'
-        update.update_playbook(self.examples_dir + f'/test-{playbook}.yml', {}, False)
+        update.update_playbook(self.examples_dir + f'/test-{playbook}.yml', config={}, in_place=False)
         assert filecmp.cmp(actual_path, expected_path, shallow=False)
 
     @pytest.mark.parametrize('playbook', ['custom-config'])
     def test_playbook_update_config(self, config, playbook):
         actual_path = self.examples_dir + f'/test-{playbook}.butler.yml'
         expected_path = self.examples_dir + f'/test-{playbook}.butler.expected.yml'
-        update.update_playbook(self.examples_dir + f'/test-{playbook}.yml', config, False)
+        update.update_playbook(self.examples_dir + f'/test-{playbook}.yml', config=config, in_place=False)
         assert filecmp.cmp(actual_path, expected_path, shallow=False)
