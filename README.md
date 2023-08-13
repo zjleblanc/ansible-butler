@@ -16,6 +16,7 @@ Functions
 | role | clean | clean role directory structure (remove empty yml files & dirs) |
 | role | mk-readme | auto generate readme based on role meta and basic yml info |
 | playbook | update | map legacy module names to FCQNs |
+| playbook | list-collections\[lc\] | list collections used in a playbook (following include_* directives) |
 
 Usage
 --------------
@@ -29,6 +30,7 @@ Usage:
   ansible-butler role clean [--roles-path=PATH] [<name> --recursive]
   ansible-butler role mk-readme [--roles-path=PATH] [<name> --recursive]
   ansible-butler playbook update [--context=CONTEXT] [--config=PATH] [<name>] [--recursive] [--force]
+  ansible-butler playbook [list-collections|lc] [--context=CONTEXT] [--config=PATH] [<name>] [--recursive] [--force]
 
 Arguments:
   name    name of target (accepts glob patterns)
@@ -66,6 +68,9 @@ Examples
   - `ansible-butler playbook update --context=./playbooks -r`
   - `ansible-butler playbook update legacy-*.yml`
   - `ansible-butler playbook update -f`
+- List Collections
+  - `ansible-butler playbook list-collections --context=./playbooks -r`
+  - `ansible-butler playbook lc example-playbook.yml`
 
 Configuration
 -------------
