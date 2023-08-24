@@ -9,6 +9,11 @@ COLLECTIONS = None
 ROLES_PATHS = C.config.get_config_value('DEFAULT_ROLES_PATH', variables=get_constants())
 COLLECTION_PATHS = C.config.get_config_value('COLLECTIONS_PATHS', variables=get_constants())
 
+def parse_python_reqs(requirements: str) -> list[str]:
+  if isinstance(requirements, str):
+    with open(requirements) as file:
+      return [line for line in file]
+
 def get_role_paths(role_name):
   paths = ROLES_PATHS
   paths.append('./roles')

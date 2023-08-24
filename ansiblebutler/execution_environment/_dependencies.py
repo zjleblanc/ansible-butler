@@ -1,7 +1,7 @@
 import json
 import os
 from ..common import load_yml
-from ..common.dependencies import DependencyResolver
+from ..common.dependencies import DependencyResolver, parse_python_reqs
 
 def pip_dry_run(requirements: list[str]):
   from pip._internal.cli.main_parser import parse_command
@@ -18,39 +18,49 @@ def pip_dry_run(requirements: list[str]):
   except AssertionError:
     pass # Ignore context related error using CLI from code
 
-def get_collections(definition_path) -> list[str]:
-  definition = load_yml(definition_path)
+def get_python_reqs(definition, path) -> list[str]:
+  if not definition.get('dependencies', {}).get('python', None):
+    return []
+  python = definition['dependencies']['python']
+  
+  if isinstance(python, str):
+    return parse_python_reqs(os.path.dirname(path) + '/' + python)
+  if isinstance(python, list):
+    return python
+  return []
+
+def get_collections(definition, path) -> list[str]:
   # process requirements.yml
   if 'collections' in definition:
     return definition['collections']
-  # process ee v3
-  if int(definition.get('version', -1)) == 3 and 'dependencies' in definition:
+  # process execution-environment.yml
+  if 'dependencies' in definition:
     galaxy = definition['dependencies'].get('galaxy', None)
     if not galaxy:
       return []
     if isinstance(galaxy, str):
-      return get_collections(os.path.dirname(definition_path) + '/' + galaxy)
+      reqs_file = os.path.dirname(path) + '/' + galaxy
+      reqs_from_file = load_yml(reqs_file)
+      return get_collections(reqs_from_file, reqs_file)
     if isinstance(galaxy, dict):
       return definition['dependencies']['galaxy'].get('collections', [])
-  # process ee <= v2
-  dependencies = definition.get('dependencies', {})
-  if dependencies.get('galaxy', None):
-    return get_collections(os.path.dirname(definition_path) + '/' + dependencies['galaxy'])
   # unexpected file type
-  print(f"[WARNING]Found unexpected contents in {definition_path} - please confirm this is a requirements file or execution environment definition")
+  print(f"[WARNING]Found unexpected contents in {path} - please confirm this is a requirements file or execution environment definition")
   return []
 
 def desc_deps(definition_path: str, config: dict):
   resolver = DependencyResolver()
-  collections = get_collections(definition_path)
+  definition = load_yml(definition_path)
+  collections = get_collections(definition, definition_path)
   resolver.resolve(collections)
   print("Dependencies Identified")
   print("-----------------------")
   print(json.dumps(resolver.dependencies, indent=2))
 
-  py_deps = resolver.dependencies.get('python',[])
-  if len(py_deps):
-    reqs = map(lambda line: line.lstrip().split(' ')[0], py_deps)
+  python_deps = get_python_reqs(definition, definition_path)
+  python_deps.extend(resolver.dependencies.get('python',[]))
+  if len(python_deps):
+    reqs = map(lambda line: line.lstrip().split(' ')[0], python_deps)
     print("\nBeginning pip *dry-run*\t(Nothing will be installed)")
     print("-----------------------")
     pip_dry_run(reqs)
