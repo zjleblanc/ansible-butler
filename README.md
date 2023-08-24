@@ -12,6 +12,7 @@ Functions
 | directory | init | initialize an ansible directory |
 | directory | init | cleanup an ansible directory |
 | ee | init | initialize an execution environment directory for ansible-builder |
+| ee | dependencies\[deps\] | parse the dependency tree based on execution environment definition (or collection requirements) |
 | role | list | list roles |
 | role | clean | clean role directory structure (remove empty yml files & dirs) |
 | role | mk-readme | auto generate readme based on role meta and basic yml info |
@@ -26,6 +27,7 @@ Usage:
   ansible-butler directory init [<dir>] [--config=PATH]
   ansible-butler directory clean [<dir>] [--skip-roles]
   ansible-butler ee init [<dir>] [--config=PATH]
+  ansible-butler ee [dependencies|deps] [--config=PATH] [<name>]
   ansible-butler role list [--roles-path=PATH] [<name> --recursive]
   ansible-butler role clean [--roles-path=PATH] [<name> --recursive]
   ansible-butler role mk-readme [--roles-path=PATH] [<name> --recursive]
@@ -58,6 +60,9 @@ Examples
 - Initialize Execution Environment Directory
   - `ansible-butler ee init ./ee-windows`
   - `ansible-butler ee init ./ee-windows --config=~/configs/ansible-butler.yml`
+- Inspect Execution Environment Dependencies
+  - `ansible-butler ee dependencies execution-environment.yml`
+  - `ansible-butler ee deps requirements.yml --config=~/configs/ansible-butler.yml`
 - Clean Roles 
   - `ansible-butler role clean my-role-1`
   - `ansible-butler role clean my-role-*`

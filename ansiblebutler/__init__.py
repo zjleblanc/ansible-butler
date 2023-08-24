@@ -3,6 +3,7 @@ Usage:
   ansible-butler directory init [<dir>] [--config=PATH]
   ansible-butler directory clean [<dir>] [--skip-roles]
   ansible-butler ee init [<dir>] [--config=PATH]
+  ansible-butler ee [dependencies|deps] [--config=PATH] [<name>]
   ansible-butler role list [--roles-path=PATH] [<name> --recursive]
   ansible-butler role clean [--roles-path=PATH] [<name> --recursive]
   ansible-butler role mk-readme [--roles-path=PATH] [<name> --recursive]

@@ -9,6 +9,7 @@ execution_environment:
       - RUN pip3 install --upgrade pip setuptools
     append_build_steps:
       - RUN echo 'Build completed (ansible-butler)'
+  dependencies: {}
 
 directory:
   init:

@@ -1,0 +1,7 @@
+botocore>=1.25.0 
+boto3==1.28.27
+jmespath==0.0.1
+packaging 
+requests 
+xmltodict 
+azure_cli_core==2.34.0
