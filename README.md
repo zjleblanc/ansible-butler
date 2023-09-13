@@ -10,7 +10,7 @@ Functions
 | Object | Action | Description |
 | ------ | ------ | ----------- |
 | directory | init | initialize an ansible directory |
-| directory | init | cleanup an ansible directory |
+| directory | clean | cleanup an ansible directory |
 | ee | init | initialize an execution environment directory for ansible-builder |
 | ee | dependencies\[deps\] | parse the dependency tree based on execution environment definition (or collection requirements) |
 | role | list | list roles |
