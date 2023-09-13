@@ -16,7 +16,7 @@ Functions
 | role | list | list roles |
 | role | clean | clean role directory structure (remove empty yml files & dirs) |
 | role | mk-readme | auto generate readme based on role meta and basic yml info |
-| playbook | update | map legacy module names to FCQNs |
+| playbook | update | map legacy module names to FQCNs |
 | playbook | list-collections\[lc\] | list collections used in a playbook (following include_* directives) |
 
 Usage
