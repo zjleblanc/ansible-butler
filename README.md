@@ -14,7 +14,7 @@ Functions
 | ee | init | initialize an execution environment directory for ansible-builder |
 | ee | dependencies\[deps\] | parse the dependency tree based on execution environment definition (or collection requirements) |
 | role | list | list roles |
-| role | dependencies\[deps\] | Build a dependency graph between roles in a specified directory |
+| role | dependencies\[deps\] | Build a dependency graph between roles in a specified directory [[Example]](https://reports.autodotes.com/butler/graph.html) |
 | role | clean | clean role directory structure (remove empty yml files & dirs) |
 | role | mk-readme | auto generate readme based on role meta and basic yml info |
 | playbook | update | map legacy module names to FQCNs |
