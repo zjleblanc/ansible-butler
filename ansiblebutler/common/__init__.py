@@ -1,5 +1,6 @@
 import os
 import yaml
+import json
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, Template
 from mergedeep import merge, Strategy
@@ -29,8 +30,16 @@ def process_config(custom):
   return config
 
 def dump_yml(data, path: str):
-  with open(path, 'w') as yml:
-    return yaml.safe_dump(data, yml)
+  with open(path, 'w') as file:
+    return yaml.safe_dump(data, file)
+  
+def dump_json(data, path: str, **kwargs):
+  with open(path, 'w') as file:
+    return json.dump(data, file, **kwargs)
+  
+def template_html(variables: dict, template_dir: str, template: str, path: str):
+    template = get_template(template, template_dir)
+    template.stream(variables).dump(path)
 
 def load_yml(path: str):
   yaml_dict = {}

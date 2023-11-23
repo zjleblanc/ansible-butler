@@ -5,6 +5,7 @@ Usage:
   ansible-butler ee init [<dir>] [--config=PATH]
   ansible-butler ee [dependencies|deps] [--config=PATH] [<name>]
   ansible-butler role list [--roles-path=PATH] [<name> --recursive]
+  ansible-butler role [dependencies|deps] [--roles-path=PATH] [<master>]
   ansible-butler role clean [--roles-path=PATH] [<name> --recursive]
   ansible-butler role mk-readme [--roles-path=PATH] [<name> --recursive]
   ansible-butler playbook update [--context=CONTEXT] [--config=PATH] [<name>] [--recursive] [--force]
@@ -12,6 +13,7 @@ Usage:
 
 Arguments:
   name    name of target (accepts glob patterns)
+  master  name of master node in graph
   dir     path to directory [default: ./]
 
 Options:

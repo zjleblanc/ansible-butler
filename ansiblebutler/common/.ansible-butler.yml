@@ -30,6 +30,65 @@ directory:
       - playbook.yml.j2
       - ansible.cfg
 
-role: {}
+role:
+  dependencies:
+    output_fmt: html # [html,json]
+    # output_dest: graph.[html|json]
+    include_tests: false
+    # master_node: role-common-setup # can set in config or pass as <master> argument
+    initial_direction: downstream
+    title: ansible-butler roles dependency graph
+    title_text_color: white
+    title_background_color: black
+    tree_options:
+      animationDuration: 750
+      maxDepth: 25
+      enableTooltip: true
+      enableTooltipKey: true
+      # modifyEntityName: null
+      # textClick: null
+      # maxDepthMessage: null
+      # missingEntityMessage: null
+      # cyclicDependencyMessage: null
+      containerWidthMultiplier: 4
+      # containerWidthInPx: null,
+      marginTop: 60
+      marginRight: 120
+      marginBottom: 200
+      marginLeft: 120 
+      parentNodeTextOrientation: left
+      childNodeTextOrientation: right
+      textOffset: 13
+      textStyleFont: 12px sans-serif
+      textStyleColor: black
+      circleStrokeColor: '#2b8f91'
+      circleStrokeWidth: 3
+      circleSize: 10
+      linkStrokeColor: '#dddddd'
+      linkStrokeWidth: 2
+      closedNodeCircleColor: '#9bd3d4'
+      openNodeCircleColor: white
+      cyclicNodeColor: '#FF4242'
+      missingNodeColor: '#CC0100'
+      maxDepthNodeColor: '#FF5850'
+      horizontalSpaceBetweenNodes: 180
+      verticalSpaceBetweenNodes: 30
+      wrapNodeName: true
+      # splitStr: null
+      tooltipItemStyleObj:
+        font-family: 'sans-serif'
+        font-size: '12px'
+      tooltipColonStr: ': '
+      tooltipKeyStyleObj: 
+        font-weight: bold
+      tooltipColonStyleObj:
+        font-weight: bold
+      tooltipValueStyleObj: {}
+      tooltipStyleObj:
+        background-color: 'white'
+        border: 'solid'
+        border-width: '1px'
+        border-radius: '5px'
+        padding: '10px'
 
 playbook: {}

@@ -1,0 +1,138 @@
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+      body,
+      html {
+        height: 100vh;
+        width: 100vw;
+      }
+
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      #tree svg {
+        margin: 0 40px;
+      }
+
+      #top-nav {
+        height: 50px;
+        color: {{ title_text_color }};
+        background-color: {{ title_background_color }};
+        border-color: {{ title_background_color }};
+      }
+
+      #top-nav-content {
+        margin-left: 10px;
+        line-height: 50px;
+      }
+
+      .row-main {
+        min-height: 100vh;
+      }
+
+      #side-bar {
+        height: 100%;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-right: red;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        box-shadow: 1px 2px 5px 0px rgba(0,0,0,0.19);
+        -webkit-box-shadow: 1px 2px 5px 0px rgba(0,0,0,0.19);
+        -moz-box-shadow: 1px 2px 5px 0px rgba(0,0,0,0.19);
+      }
+
+      #butler-title {
+        color: {{ title_text_color }};
+        background-color: {{ title_background_color }};
+        border-color: {{ title_background_color }};
+        border-radius: 0;
+      }
+    </style>
+    <style>
+      .btn-outline-primary:hover {
+          background-color: {{ tree_options['circleStrokeColor'] }} !important; 
+          color: white !important;
+      }
+      .btn-outline-primary {
+        border-color: {{ tree_options['circleStrokeColor'] }} !important;
+        color: {{ tree_options['circleStrokeColor'] }} !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="top-nav">
+      <div id="top-nav-content">
+        {{ title }}
+      </div>
+    </div>
+    <div class="row row-main">
+      <div class="col-md-2">
+        <div id="side-bar">
+          <div class="form-floating">
+            <select id="select-root-node" class="form-select" aria-label="Select root node">
+              {% for dep in dependencies %}
+                {% if dep['_name'] == master_node %}
+                <option selected value="{{ dep['_name'] }}">{{ dep['_name'] }}</option>
+                {% else %}
+                <option value="{{ dep['_name'] }}">{{ dep['_name'] }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+            <label for="select-root-node">Root node (role)</label>
+          </div>
+          <div class="form-floating">
+            <select id="select-direction" class="form-select" aria-label="Select direction">
+              {% if initial_direction == 'downstream' %}
+                <option selected value="downstream">Downstream</option>
+                <option value="upstream">Upstream</option>
+              {% else %}
+                <option value="downstream">Downstream</option>
+                <option selected value="upstream">Upstream</option>
+              {% endif %}
+            </select>
+            <label for="select-direction">Graph direction</label>
+          </div>
+          <button id="expand" type="button" class="btn btn-sm btn-outline-primary">Expand All</button>
+          <button id="collapse" type="button" class="btn btn-sm btn-outline-secondary">Collapse All</button>
+        </div>
+      </div>
+      <div id="content" class="col-md-10">
+        <div id="tree"></div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/square/dependentree/dist/dependentree.js"></script>
+  <!-- For this example, the JSON array is parsed and saved as a JavaScript variable called royals -->
+  <script>
+    var data = {{ dependencies | tojson }};
+    var options = {{ tree_options | tojson }};
+  </script>
+  <script>
+    // Creates an instance of the class
+    // The tree attaches to the body element
+    const tree = new DependenTree('div#tree', options);
+
+    // Adds dependency data to the tree
+    tree.addEntities(data);
+
+    function resetGraph() {
+      var root_node = document.getElementById("select-root-node").value;
+      var direction = document.getElementById("select-direction").value;
+      tree.setTree(root_node, direction);
+    }
+
+    document.getElementById("select-root-node").onchange = resetGraph;
+    document.getElementById("select-direction").onchange = resetGraph;
+
+    resetGraph();
+
+    document.querySelector('button#expand').addEventListener('click', () => tree.expandAll());
+    document.querySelector('button#collapse').addEventListener('click', () => tree.collapseAll());
+  </script>
+</html>

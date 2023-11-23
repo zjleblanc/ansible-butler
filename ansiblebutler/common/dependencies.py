@@ -1,8 +1,10 @@
+import os
 import ansible.constants as C
 from ansible.galaxy.collection import find_existing_collections
 from ansible.galaxy.collection.concrete_artifact_manager import ConcreteArtifactsManager
 from ansible.cli.config import get_constants
 from ansible.plugins.loader import init_plugin_loader
+from ansiblelint.file_utils import Lintable
 from ..external.introspect import process, sanitize_requirements
 
 COLLECTIONS = None

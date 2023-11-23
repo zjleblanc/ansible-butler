@@ -14,6 +14,7 @@ Functions
 | ee | init | initialize an execution environment directory for ansible-builder |
 | ee | dependencies\[deps\] | parse the dependency tree based on execution environment definition (or collection requirements) |
 | role | list | list roles |
+| role | dependencies\[deps\] | Build a dependency graph between roles in a specified directory |
 | role | clean | clean role directory structure (remove empty yml files & dirs) |
 | role | mk-readme | auto generate readme based on role meta and basic yml info |
 | playbook | update | map legacy module names to FQCNs |
@@ -29,6 +30,7 @@ Usage:
   ansible-butler ee init [<dir>] [--config=PATH]
   ansible-butler ee [dependencies|deps] [--config=PATH] [<name>]
   ansible-butler role list [--roles-path=PATH] [<name> --recursive]
+  ansible-butler role [dependencies|deps] [--roles-path=PATH]
   ansible-butler role clean [--roles-path=PATH] [<name> --recursive]
   ansible-butler role mk-readme [--roles-path=PATH] [<name> --recursive]
   ansible-butler playbook update [--context=CONTEXT] [--config=PATH] [<name>] [--recursive] [--force]
@@ -66,6 +68,12 @@ Examples
 - Clean Roles 
   - `ansible-butler role clean my-role-1`
   - `ansible-butler role clean my-role-*`
+- List Roles 
+  - `ansible-butler role list`
+  - `ansible-butler role list ansible_collections/namespace/collection/roles`
+- Generate Dependency Graph 
+  - `ansible-butler role deps`
+  - `ansible-butler role deps ansible_collections/namespace/collection/roles`
 - Generate README
   - `ansible-butler role mk-readme my-role-1`
   - `ansible-butler role mk-readme my-role-*`
@@ -90,7 +98,7 @@ Create an `.ansible-butler.yml` in one or more of the following locations:
 You can also specify a specific path at runtime via the `--config` option.
 
 ```yaml
-# Configuration Schema
+# Example Configuration Schema
 execution_environment:
   init:
     version: 2
@@ -112,6 +120,26 @@ directory:
           - README.md
     files:
       - playbook.yml
+
+role:
+  dependencies:
+    output_fmt: html # [html,json]
+    output_dest: graph.html
+    include_tests: false
+    master_node: role-common-setup
+    initial_direction: downstream
+    title: ansible-butler roles dependency graph
+    title_text_color: white
+    title_background_color: black
+    tree_options:
+      # Customize the color palette
+      circleStrokeColor: '#2b8f91'
+      linkStrokeColor: '#dddddd'
+      closedNodeCircleColor: '#9bd3d4'
+      openNodeCircleColor: white
+      cyclicNodeColor: '#FF4242'
+      missingNodeColor: '#CC0100'
+      maxDepthNodeColor: '#FF5850'
 
 playbook:
   update:

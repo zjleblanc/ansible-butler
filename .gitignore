@@ -3,6 +3,8 @@
 roles/
 playbooks/
 /*ansible-butler.yml
+graph.html
+graph.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
