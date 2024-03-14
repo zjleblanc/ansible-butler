@@ -35,8 +35,11 @@ def _process_tasks(role: str):
   dependencies = []
   for raw_task in task_data:
     lint_task = Task(raw_task)
-    if lint_task.get('action') and lint_task.action.endswith("include_role") and lint_task.args.get('name'):
-      dependencies.append(lint_task.args.get('name'))
+    try:
+      if lint_task.get('action') and lint_task.action.endswith("include_role") and lint_task.args.get('name'):
+        dependencies.append(lint_task.args.get('name'))
+    except Exception as ex:
+      print(f"[Processing role {role}] Failed to parse {raw_task['__file__']} with Exception: {ex}")
   return dependencies, len(task_data)
 
 def _process_play(play):
