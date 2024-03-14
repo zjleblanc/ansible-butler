@@ -101,14 +101,25 @@ You can also specify a specific path at runtime via the `--config` option.
 # Example Configuration Schema
 execution_environment:
   init:
-    version: 2
-    ansible_config: ansible.cfg
-    ee_base_image: quay.io/ansible/ansible-runner:latest
-    ee_builder_image: quay.io/ansible/ansible-builder:latest
-    prepend_build_steps:
-      - ...
-    append_build_steps:
-      - ...
+    # Refer to full schema here:
+    # https://ansible.readthedocs.io/projects/builder/en/stable/definition/#overview
+    version: 3
+    additional_build_files:
+      - src: files/ansible.cfg
+        dest: configs
+    ee_base_image: registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel9:latest
+    dependencies:
+      system:
+        - ...
+      python:
+        - ...
+      collections:
+        - name: ansible.utils
+          version: ">=3.1.0"
+        - ...
+    additional_build_steps:
+      prepend_galaxy:
+        - ADD _build/configs/ansible.cfg ~/.ansible.cfg
 
 directory:
   init:
