@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, Template
 from mergedeep import merge, Strategy
+from .butler_dumper import ButlerDumper
 
 TEMPLATE_DIR = os.path.dirname(os.path.abspath(__file__)) + '/templates'
 PLUGIN_MAP_PATH = os.path.dirname(os.path.abspath(__file__)) + '/plugin_map.yml'
@@ -80,9 +81,16 @@ def parse_comment_line_endings(yml):
         var_comments[var_name] = var_comment
   return var_comments
 
+
+def __to_nice_yaml(data, level=0, indent=2):
+    raw = yaml.dump(data, Dumper=ButlerDumper, indent=indent, sort_keys=False).rstrip()
+    processed = map(lambda line: (" "*level*indent) + line, raw.split("\n"))
+    return "\n".join(processed)
+
 def get_template(name: str, templates_dir=TEMPLATE_DIR) -> Template:
   file_loader = FileSystemLoader(templates_dir)
   env = Environment(loader=file_loader, trim_blocks=True, lstrip_blocks=True)
+  env.filters['to_nice_yaml'] = __to_nice_yaml
   return env.get_template(name)
 
 def default_json_serializer(obj):

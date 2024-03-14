@@ -1,15 +1,25 @@
 ---
 execution_environment:
   init:
-    version: 2
-    ansible_config: ansible.cfg
-    ee_base_image: quay.io/ansible/ansible-runner:latest
-    ee_builder_image: quay.io/ansible/ansible-builder:latest
-    prepend_build_steps:
-      - RUN pip3 install --upgrade pip setuptools
-    append_build_steps:
-      - RUN echo 'Build completed (ansible-butler)'
-  dependencies: {}
+    version: 3
+    additional_build_files:
+      - src: files/ansible.cfg
+        dest: configs
+    ee_base_image: registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel9:latest
+    additional_build_steps:
+      prepend_galaxy:
+        - ADD _build/configs/ansible.cfg /etc/ansible/ansible.cfg
+      append_final:
+        - RUN echo 'Build completed (ansible-butler)'
+    # latest as of 03-13-24
+    dependencies:
+      system:
+        - git
+      python:
+        - jmespath
+      collections:
+        - name: ansible.utils
+          version: ">=3.1.0"
 
 directory:
   init:

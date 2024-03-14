@@ -55,8 +55,11 @@ def _process_role_tests(role: str):
     C.set_constant('DEPRECATION_WARNINGS', False)
     lintables = map(lambda pb: Lintable(f"{root}/{pb}"), playbooks)
     for pb in filter(lambda l: l.kind == 'playbook', lintables):
-      for play in pb.data:
-        dependencies.extend(_process_play(play))
+      try:
+        for play in pb.data:
+          dependencies.extend(_process_play(play))
+      except Exception as ex:
+        print(f"[Processing role {role}] Failed to parse test playbook {pb.name} with Exception: {ex}")
   return dependencies
 
 def _process_role(role: str, include_tests: False) -> dict:

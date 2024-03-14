@@ -5,6 +5,7 @@ playbooks/
 /*ansible-butler.yml
 graph.html
 graph.json
+execution-environment.yml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
