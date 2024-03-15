@@ -123,6 +123,17 @@ execution_environment:
 
 directory:
   init:
+    lint: 
+      enabled: true
+    code_bot:
+      enabled: true
+      interval: weekly
+    vscode:
+      enabled: true
+      settings:
+        "files.trimTrailingWhitespace": true
+        "editor.renderFinalNewline": "on"
+        "files.trimFinalNewlines": true
     folders:
       - name: plugins
         folders:
@@ -166,6 +177,8 @@ playbook:
 [🔗 Example adding test plugins directory](./docs/config/.ansible-butler.test-plugins.yml)
 <br>
 [🔗 Example adding module redirects](./docs/config/.ansible-butler.module-redirects.yml)
+<br>
+[🔗 Example disabling directory init configs](./docs/config/.ansible-butler.custom-configs.yml)
 
 Troubleshooting
 ----------------

@@ -1,0 +1,15 @@
+---
+directory:
+  init:
+    lint: 
+      enabled: false
+    code_bot:
+      enabled: true
+      interval: daily
+    vscode:
+      enabled: true
+      settings:
+        "files.trimTrailingWhitespace": true
+        "editor.renderFinalNewline": "on"
+        "files.trimFinalNewlines": true
+        "some.other": "setting.value"
