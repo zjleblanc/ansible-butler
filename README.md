@@ -178,7 +178,7 @@ playbook:
 <br>
 [🔗 Example adding module redirects](./docs/config/.ansible-butler.module-redirects.yml)
 <br>
-[🔗 Example disabling directory init configs](./docs/config/.ansible-butler.custom-configs.yml)
+[🔗 Example customizing directory init configs](./docs/config/.ansible-butler.custom-configs.yml)
 
 Troubleshooting
 ----------------
