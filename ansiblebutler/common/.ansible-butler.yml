@@ -23,6 +23,17 @@ execution_environment:
 
 directory:
   init:
+    lint: 
+      enabled: true
+    code_bot:
+      enabled: true
+      interval: weekly
+    vscode:
+      enabled: true
+      settings:
+        "files.trimTrailingWhitespace": true
+        "editor.renderFinalNewline": "on"
+        "files.trimFinalNewlines": true
     folders:
       - name: inventories
         folders:
