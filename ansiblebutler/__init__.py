@@ -3,6 +3,7 @@ Usage:
   ansible-butler directory init [<dir>] [--config=PATH]
   ansible-butler directory clean [<dir>] [--skip-roles]
   ansible-butler ee init [<dir>] [--config=PATH]
+  ansible-butler ee inspect [<image>] [--config=PATH]
   ansible-butler ee [dependencies|deps] [--config=PATH] [<name>]
   ansible-butler role list [--roles-path=PATH] [<name> --recursive]
   ansible-butler role [dependencies|deps] [--roles-path=PATH] [<master>]
@@ -13,6 +14,7 @@ Usage:
 
 Arguments:
   name    name of target (accepts glob patterns)
+  image   name of image
   master  name of master node in graph
   dir     path to directory [default: ./]
 

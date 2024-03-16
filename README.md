@@ -12,6 +12,7 @@ Functions
 | directory | init | initialize an ansible directory |
 | directory | clean | cleanup an ansible directory |
 | ee | init | initialize an execution environment directory for ansible-builder |
+| ee | inspect | quickly inpsect the python libraries and ansible collections in an execution environment |
 | ee | dependencies\[deps\] | parse the dependency tree based on execution environment definition (or collection requirements) |
 | role | list | list roles |
 | role | dependencies\[deps\] | Build a dependency graph between roles in a specified directory [[Example]](https://reports.autodotes.com/butler/graph.html) |
@@ -28,9 +29,10 @@ Usage:
   ansible-butler directory init [<dir>] [--config=PATH]
   ansible-butler directory clean [<dir>] [--skip-roles]
   ansible-butler ee init [<dir>] [--config=PATH]
+  ansible-butler ee inspect [<image>] [--config=PATH]
   ansible-butler ee [dependencies|deps] [--config=PATH] [<name>]
   ansible-butler role list [--roles-path=PATH] [<name> --recursive]
-  ansible-butler role [dependencies|deps] [--roles-path=PATH]
+  ansible-butler role [dependencies|deps] [--roles-path=PATH] [<master>]
   ansible-butler role clean [--roles-path=PATH] [<name> --recursive]
   ansible-butler role mk-readme [--roles-path=PATH] [<name> --recursive]
   ansible-butler playbook update [--context=CONTEXT] [--config=PATH] [<name>] [--recursive] [--force]
@@ -38,6 +40,8 @@ Usage:
 
 Arguments:
   name    name of target (accepts glob patterns)
+  image   name of image
+  master  name of master node in graph
   dir     path to directory [default: ./]
 
 Options:
@@ -62,6 +66,9 @@ Examples
 - Initialize Execution Environment Directory
   - `ansible-butler ee init ./ee-windows`
   - `ansible-butler ee init ./ee-windows --config=~/configs/ansible-butler.yml`
+- Inspect an Execution Environment
+  - `ansible-butler ee inspect quay.io/zleblanc/ee-default`
+  - `ansible-butler ee init quay.io/zleblanc/ee-default --config=~/configs/ansible-butler.yml`
 - Inspect Execution Environment Dependencies
   - `ansible-butler ee dependencies execution-environment.yml`
   - `ansible-butler ee deps requirements.yml --config=~/configs/ansible-butler.yml`
@@ -100,6 +107,9 @@ You can also specify a specific path at runtime via the `--config` option.
 ```yaml
 # Example Configuration Schema
 execution_environment:
+  inspect:
+    engine: auto # [auto,podman,docker]
+    format: yaml # [yaml,json]
   init:
     # Refer to full schema here:
     # https://ansible.readthedocs.io/projects/builder/en/stable/definition/#overview

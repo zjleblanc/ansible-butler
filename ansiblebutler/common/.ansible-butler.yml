@@ -1,5 +1,8 @@
 ---
 execution_environment:
+  inspect:
+    engine: auto # [auto,podman,docker]
+    format: yaml # [yaml,json]
   init:
     version: 3
     additional_build_files:
@@ -34,6 +37,18 @@ directory:
         "files.trimTrailingWhitespace": true
         "editor.renderFinalNewline": "on"
         "files.trimFinalNewlines": true
+        "ansible.ansible.useFullyQualifiedCollectionNames": true
+        "ansible.ansibleNavigator.path": "ansible-navigator"
+        "ansible.validation.lint.enabled": true
+        "ansible.validation.enabled": true
+        "ansible.executionEnvironment.image": "ghcr.io/ansible/creator-ee:latest"
+        "ansible.executionEnvironment.enabled": true
+        "ansible.executionEnvironment.containerEngine": "auto"
+        # "ansible.executionEnvironment.pull.arguments": "--tls-verify=false"
+        "ansible.executionEnvironment.pull.policy": "missing"
+        "ansible.lightspeed.enabled": true
+        "ansible.lightspeed.URL": "https://c.ai.ansible.redhat.com"
+        "ansible.lightspeed.suggestions.enabled": true
     folders:
       - name: inventories
         folders:

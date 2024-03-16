@@ -13,7 +13,7 @@ def render_file_template(parent, src: str, dest: str, config: dict):
     with open(full_path, 'w') as file:
         file.write(content)
 
-def init_dir(dir: str, config: dict):
+def init_def(dir: str, config: dict):
     if dir != DEFAULT_DIR:
         os.makedirs(dir, exist_ok=True)
 
