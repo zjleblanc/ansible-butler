@@ -15,7 +15,7 @@ def create_file(parent, file: str, config={'date': datetime.now()}):
     if file.endswith('.j2'):
         dest = full_path[:-3]
         if os.path.isfile(dest):
-            print("Skipping {dest}: file already exists")
+            print(f"Skipping {dest}: file already exists")
             return
         template = get_template(file, TEMPLATE_DIR)
         content = template.render(config)
@@ -24,7 +24,7 @@ def create_file(parent, file: str, config={'date': datetime.now()}):
         return
     
     if os.path.isfile(full_path):
-        print("Skipping {full_path}: file already exists")
+        print(f"Skipping {full_path}: file already exists")
         return
     with open(full_path, 'a'):
         os.utime(full_path, None)
