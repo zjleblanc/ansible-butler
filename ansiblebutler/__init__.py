@@ -11,7 +11,7 @@ Usage:
   ansible-butler role mk-readme [--roles-path=PATH] [<name> --recursive]
   ansible-butler playbook update [--context=CONTEXT] [--config=PATH] [<name>] [--recursive] [--force]
   ansible-butler playbook [list-collections|lc] [--context=CONTEXT] [--config=PATH] [<name>] [--recursive] [--force]
-  ansible-butler template clone <id> [<name>]
+  ansible-butler template clone <id> [<name>] [--config=PATH] [--dry-run]
 
 Arguments:
   name    name of target (accepts glob patterns)
@@ -24,6 +24,7 @@ Options:
   -h --help           Show this screen
   -r --recursive      Apply glob recursively [default: False]
   -f --force          Make file changes in place
+  --dry-run           Do not make any changes - report on action behavior
   --config=PATH       Path to config file
   --roles-path=PATH   Path to roles directory [default: ./roles]
   --context=CONTEXT   Path to context directory [default: ./]

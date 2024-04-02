@@ -20,6 +20,7 @@ Functions
 | role | mk-readme | auto generate readme based on role meta and basic yml info |
 | playbook | update | map legacy module names to FQCNs |
 | playbook | list-collections\[lc\] | list collections used in a playbook (following include_* directives) |
+| template | clone | clone a job template (including survey, schedules, and labels) |
 
 Usage
 --------------
@@ -37,9 +38,11 @@ Usage:
   ansible-butler role mk-readme [--roles-path=PATH] [<name> --recursive]
   ansible-butler playbook update [--context=CONTEXT] [--config=PATH] [<name>] [--recursive] [--force]
   ansible-butler playbook [list-collections|lc] [--context=CONTEXT] [--config=PATH] [<name>] [--recursive] [--force]
+  ansible-butler template clone <id> [<name>] [--config=PATH] [--dry-run]
 
 Arguments:
   name    name of target (accepts glob patterns)
+  id      resource id
   image   name of image
   master  name of master node in graph
   dir     path to directory [default: ./]
@@ -48,6 +51,7 @@ Options:
   -h --help           Show this screen
   -r --recursive      Apply glob recursively [default: False]
   -f --force          Make file changes in place
+  --dry-run           Do not make any changes - report on action behavior
   --config=PATH       Path to config file
   --roles-path=PATH   Path to roles directory [default: ./roles]
   --context=CONTEXT   Path to context directory [default: ./]
@@ -91,6 +95,9 @@ Examples
 - List Collections
   - `ansible-butler playbook list-collections --context=./playbooks -r`
   - `ansible-butler playbook lc example-playbook.yml`
+- Clone Job Template
+  - `ansible-butler template clone 1`
+  - `ansible-butler template clone 1 --dry-run`
 
 Configuration
 -------------
@@ -180,6 +187,19 @@ playbook:
         redirect: zjleblanc.kasa.smart_device
       custom_module:
         redirect: company.it.custom_module
+
+template:
+  clone:
+    skip_labels: false
+    skip_survey: false
+    skip_schedules: false
+
+auth:
+  verify_ssl: true
+  # controller_host: https://controller.example.com   # Falls back to ENV CONTROLLER_HOST
+  # controller_username: admin                        # Falls back to ENV CONTROLLER_USERNAME
+  # controller_password: secret                       # Falls back to ENV CONTROLLER_PASSWORD
+  # controller_token: token                           # Falls back to ENV CONTROLLER_OAUTH_TOKEN
 ```
 
 [🔗 Default configuration file](./ansiblebutler/common/.ansible-butler.yml)
