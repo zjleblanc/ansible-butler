@@ -196,10 +196,10 @@ template:
 
 auth:
   verify_ssl: true
-  # controller_host: https://controller.example.com   # Falls back to ENV CONTROLLER_HOST
-  # controller_username: admin                        # Falls back to ENV CONTROLLER_USERNAME
-  # controller_password: secret                       # Falls back to ENV CONTROLLER_PASSWORD
-  # controller_token: token                           # Falls back to ENV CONTROLLER_OAUTH_TOKEN
+  # controller_host: https://controller.example.com   # Falls back to env CONTROLLER_HOST
+  # controller_username: admin                        # Falls back to env CONTROLLER_USERNAME
+  # controller_password: secret                       # Falls back to env CONTROLLER_PASSWORD
+  # controller_token: token                           # Falls back to env CONTROLLER_OAUTH_TOKEN
 ```
 
 [🔗 Default configuration file](./ansiblebutler/common/.ansible-butler.yml)
