@@ -128,3 +128,15 @@ role:
         padding: '10px'
 
 playbook: {}
+
+template:
+  clone:
+    skip_labels: false
+    skip_survey: false
+    skip_schedules: false
+auth:
+  verify_ssl: true
+  # controller_host: https://controller.example.com
+  # controller_username: admin
+  # controller_password: secret
+  # controller_token: token
